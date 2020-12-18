@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 // u slucaju da imamo vise contexta
 import { FontAwesome } from '@expo/vector-icons';
 
 const IndexScreen = () => {
-    const { state, addBlogPost } = useContext(BlogContext);
+    const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
 
     return <View>
         <Button title="Add blog post" onPress={() => addBlogPost()}></Button>
@@ -14,8 +14,10 @@ const IndexScreen = () => {
         keyExtractor={(blogPost) => blogPost.title}
         renderItem={({item}) => {
             return <View style={styles.row}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <FontAwesome name="trash-o" style={styles.icon}/>
+                    <Text style={styles.title}>{item.title} - {item.id}</Text>
+                    <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                        <FontAwesome name="trash-o" style={styles.icon}/>
+                    </TouchableOpacity>
                 </View>
         }}/>
     </View>;
