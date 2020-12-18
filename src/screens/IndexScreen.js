@@ -5,10 +5,9 @@ import { Context as BlogContext } from '../context/BlogContext';
 import { FontAwesome } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation }) => {
-    const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
+    const { state, deleteBlogPost } = useContext(BlogContext);
 
     return <View>
-        <Button title="Add blog post" onPress={() => addBlogPost()}></Button>
         <FlatList 
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
@@ -27,6 +26,16 @@ const IndexScreen = ({ navigation }) => {
             );
         }}/>
     </View>;
+};
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+                <FontAwesome name="plus" size={30} color="black" style={{ marginRight: 5}}/>
+            </TouchableOpacity>
+        )
+    };
 }
 
 const styles = StyleSheet.create({
