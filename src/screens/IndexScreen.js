@@ -9,6 +9,20 @@ const IndexScreen = ({ navigation }) => {
 
     useEffect(() => {
         getBlogPosts();
+
+        /*
+            Posto imamo useEffect koji ima kao 2 parametar []
+            moramo gledati da li je doslo do ponovnov vracanja na rutu
+            jer se nece opaliti API nakon sto napravimo neki API request
+        */
+        const listener = navigation.addListener('didFocus', () => {
+            getBlogPosts();
+        });
+
+        // alias za ngOnDestroy u Angularu
+        return () => {
+            listener.remove();
+        }
     }, []);
 
     return <View>
